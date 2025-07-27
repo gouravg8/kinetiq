@@ -7,28 +7,31 @@ import {
 	CalendarOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
+import { useAtomValue } from "jotai";
+import { timeAtom } from "@/Jotai/timeState";
 
 const DateNavigation = () => {
 	const [currentDate, setCurrentDate] = useState(dayjs());
+	const timeSegment = useAtomValue(timeAtom);
 
-	// Get start and end of current week
-	const getWeekRange = (date: dayjs.Dayjs) => {
-		const startOfWeek = date.startOf(timeSegment);
-		const endOfWeek = date.endOf(timeSegment);
+	// Get start and end of current period
+	const getPeriodRange = (date: dayjs.Dayjs) => {
+		const startOfPeriod = date.startOf(timeSegment);
+		const endOfPeriod = date.endOf(timeSegment);
 		return {
-			start: startOfWeek,
-			end: endOfWeek,
+			start: startOfPeriod,
+			end: endOfPeriod,
 		};
 	};
 
-	const weekRange = getWeekRange(currentDate);
+	const periodRange = getPeriodRange(currentDate);
 
-	// Navigate to previous week
+	// Navigate to previous Period
 	const goToPreviousTime = () => {
 		setCurrentDate(currentDate.subtract(1, timeSegment));
 	};
 
-	// Navigate to next week
+	// Navigate to next Period
 	const goToNextTime = () => {
 		setCurrentDate(currentDate.add(1, timeSegment));
 	};
@@ -40,12 +43,12 @@ const DateNavigation = () => {
 		}
 	};
 
-	// Format the week range display
-	const formatWeekRange = () => {
-		const startMonth = weekRange.start.format("MMM");
-		const endMonth = weekRange.end.format("MMM");
-		const startDay = weekRange.start.format("D");
-		const endDay = weekRange.end.format("D");
+	// Format the period range display
+	const formatPeriodRange = () => {
+		const startMonth = periodRange.start.format("MMM");
+		const endMonth = periodRange.end.format("MMM");
+		const startDay = periodRange.start.format("D");
+		const endDay = periodRange.end.format("D");
 
 		if (startMonth === endMonth) {
 			return `${startMonth} ${startDay} - ${endDay}`;
@@ -62,7 +65,7 @@ const DateNavigation = () => {
 				// className=" w-full"
 				// style={{ width: "100%", justifyContent: "center" }}
 			>
-				{/* Previous Week Button */}
+				{/* Previous period Button */}
 				<Button
 					type="text"
 					icon={<LeftOutlined />}
@@ -75,7 +78,7 @@ const DateNavigation = () => {
 					}}
 				/>
 
-				{/* Week Range Display */}
+				{/* period Range Display */}
 				<div
 					className="week-display"
 					style={{
@@ -86,10 +89,10 @@ const DateNavigation = () => {
 						textAlign: "center",
 					}}
 				>
-					{formatWeekRange()}
+					{formatPeriodRange()}
 				</div>
 
-				{/* Next Week Button */}
+				{/* Next period Button */}
 				<Button
 					type="text"
 					icon={<RightOutlined />}

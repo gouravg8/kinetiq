@@ -2,9 +2,12 @@
 import { BarChart2, Dumbbell, Moon, Sun } from "lucide-react";
 import React, { useState } from "react";
 import { Segmented } from "antd";
+import { useSetAtom } from "jotai";
+import { timeAtom } from "@/Jotai/timeState";
 
 const Header = () => {
 	const [darkMode, setDarkMode] = useState(false);
+	const setTimeState = useSetAtom(timeAtom);
 	return (
 		<header className="flex justify-between flex-col gap-4 md:flex-row items-center mt-4 mb-8">
 			<div className="flex items-center gap-4">
@@ -35,7 +38,7 @@ const Header = () => {
 				defaultValue="week"
 				onChange={(value) => {
 					if (value === "week" || value === "month") {
-						setTime(value);
+						setTimeState(value);
 					}
 				}}
 				options={[
