@@ -7,15 +7,17 @@ import {
 	CalendarOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { useAtomValue } from "jotai";
-import { timeAtom } from "@/Jotai/timeState";
+import { useAtomValue, useSetAtom } from "jotai";
+import { dateAtom, timeAtom, timeType } from "@/Jotai/timeAtom";
 
 const DateNavigation = () => {
 	const [currentDate, setCurrentDate] = useState(dayjs());
-	const timeSegment = useAtomValue(timeAtom);
+	const timeSegment = useAtomValue<timeType>(timeAtom);
+	const setDate = useSetAtom(dateAtom);
 
 	// Get start and end of current period
 	const getPeriodRange = (date: dayjs.Dayjs) => {
+		if (timeSegment === "analytics") return;
 		const startOfPeriod = date.startOf(timeSegment);
 		const endOfPeriod = date.endOf(timeSegment);
 		return {
@@ -28,12 +30,16 @@ const DateNavigation = () => {
 
 	// Navigate to previous Period
 	const goToPreviousTime = () => {
+		if (timeSegment === "analytics") return;
 		setCurrentDate(currentDate.subtract(1, timeSegment));
+		setDate(currentDate.subtract(1, timeSegment));
 	};
 
 	// Navigate to next Period
 	const goToNextTime = () => {
+		if (timeSegment === "analytics") return;
 		setCurrentDate(currentDate.add(1, timeSegment));
+		setDate(currentDate.add(1, timeSegment));
 	};
 
 	// Handle date picker change
@@ -45,10 +51,10 @@ const DateNavigation = () => {
 
 	// Format the period range display
 	const formatPeriodRange = () => {
-		const startMonth = periodRange.start.format("MMM");
-		const endMonth = periodRange.end.format("MMM");
-		const startDay = periodRange.start.format("D");
-		const endDay = periodRange.end.format("D");
+		const startMonth = periodRange?.start.format("MMM");
+		const endMonth = periodRange?.end.format("MMM");
+		const startDay = periodRange?.start.format("D");
+		const endDay = periodRange?.end.format("D");
 
 		if (startMonth === endMonth) {
 			return `${startMonth} ${startDay} - ${endDay}`;
@@ -58,13 +64,8 @@ const DateNavigation = () => {
 	};
 
 	return (
-		<div className="date-navigation">
-			<Space
-				// size=""
-				align="center"
-				// className=" w-full"
-				// style={{ width: "100%", justifyContent: "center" }}
-			>
+		<div className="px-2 py-1 mx-auto rounded bg-zinc-800 w-fit">
+			<Space align="center">
 				{/* Previous period Button */}
 				<Button
 					type="text"
@@ -105,19 +106,6 @@ const DateNavigation = () => {
 					}}
 				/>
 			</Space>
-
-			<style jsx>{`
-        .date-navigation {
-          background-color: var(--card-black);
-          border-radius: 6px;
-        //   padding: 12px 20px;
-        //   margin-bottom: 20px;
-        }
-        
-        .ant-picker {
-          background-color: transparent !important;
-        }
-      `}</style>
 		</div>
 	);
 };

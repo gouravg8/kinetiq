@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 const NavigationBar = () => {
 	return (
 		<div>
-			<div className="flex justify-between items-center gap-3 flex-col p-3 rounded-md">
+			<div className="flex flex-col items-center justify-between gap-3 p-3 rounded-md">
 				<DateNavigation timeSegment={time} />
 			</div>
 		</div>
@@ -36,7 +36,7 @@ const renderWeekView = (date: dayjs.Dayjs) => {
 	const today = new Date();
 
 	return (
-		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+		<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
 			{days.map((day) => {
 				const dateStr = toISODateString(day);
 				const workout = workouts[dateStr];
@@ -49,8 +49,8 @@ const renderWeekView = (date: dayjs.Dayjs) => {
 						className={`bg-white dark:bg-[#1C1C1E] p-4 rounded-lg shadow-md cursor-pointer transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-yellow-500/20 flex flex-col justify-between h-48 ${isToday ? "border-2 border-yellow-500" : "border-2 border-transparent"}`}
 					>
 						<div>
-							<div className="flex justify-between items-center">
-								<span className="font-bold text-lg text-black dark:text-white">
+							<div className="flex items-center justify-between">
+								<span className="text-lg font-bold text-black dark:text-white">
 									{formatDate(day, { weekday: "short" })}
 								</span>
 								<span
@@ -67,14 +67,14 @@ const renderWeekView = (date: dayjs.Dayjs) => {
 								</div>
 							)}
 						</div>
-						<div className="flex-grow flex items-center justify-center">
+						<div className="flex items-center justify-center flex-grow">
 							{workout ? (
 								<div className="text-center">
 									<Dumbbell
-										className="mx-auto text-yellow-500 mb-2"
+										className="mx-auto mb-2 text-yellow-500"
 										size={24}
 									/>
-									<p className="text-black dark:text-white font-semibold">
+									<p className="font-semibold text-black dark:text-white">
 										{workout.bodyPart}
 									</p>
 									<p className="text-xs text-gray-500 dark:text-gray-400">
@@ -83,13 +83,13 @@ const renderWeekView = (date: dayjs.Dayjs) => {
 								</div>
 							) : (
 								<div className="text-center text-gray-400 dark:text-gray-500 group">
-									<div className="w-12 h-12 mx-auto rounded-full bg-gray-200 dark:bg-gray-700 group-hover:bg-yellow-500 flex items-center justify-center transition-colors">
+									<div className="flex items-center justify-center w-12 h-12 mx-auto transition-colors bg-gray-200 rounded-full dark:bg-gray-700 group-hover:bg-yellow-500">
 										<Plus
 											size={24}
 											className="text-gray-500 dark:text-gray-400 group-hover:text-black"
 										/>
 									</div>
-									<span className="text-sm mt-2">Add workout</span>
+									<span className="mt-2 text-sm">Add workout</span>
 								</div>
 							)}
 						</div>
