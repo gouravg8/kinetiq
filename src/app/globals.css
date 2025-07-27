@@ -9,7 +9,7 @@
 	--border-black: #3a3a3a;
 
 	/* Yellow/Gold Accents */
-	--primary-yellow: #f59e0b;
+	--primary-yellow: oklch(79.5% 0.184 86.047);
 	--secondary-yellow: #fbbf24;
 	--light-yellow: #fef3c7;
 	--dark-yellow: #d97706;
@@ -48,7 +48,7 @@
 	--border-black: #3a3a3a;
 
 	/* Yellow/Gold Accents */
-	--primary-yellow: #f59e0b;
+	--primary-yellow: oklch(79.5% 0.184 86.047);
 	--secondary-yellow: #fbbf24;
 	--light-yellow: #fef3c7;
 	--dark-yellow: #d97706;

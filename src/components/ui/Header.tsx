@@ -10,11 +10,14 @@ const Header = () => {
 	const { theme, setTheme } = useTheme();
 	const [timeSegment, setTimeSegment] = useAtom(timeAtom);
 	return (
-		<header className="flex justify-between flex-col gap-4 md:flex-row items-center mt-4 mb-8">
+		<header className="flex flex-col items-center justify-between gap-4 mt-4 mb-8 md:flex-row">
 			<div className="flex items-center gap-4">
 				<div className="flex items-center gap-4">
-					<div className="w-12 h-12 bg-accent rounded-md flex items-center justify-center">
-						<Dumbbell className="text-black" size={28} />
+					<div className="flex items-center justify-center w-12 h-12 rounded-md bg-accent">
+						<Dumbbell
+							className="w-20 h-12 px-2 text-black rounded bg-(--primary-yellow) "
+							size={58}
+						/>
 					</div>
 					<div>
 						<h1 className="text-3xl font-bold">Workout Tracker</h1>

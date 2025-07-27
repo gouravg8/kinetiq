@@ -2,8 +2,10 @@
 const antdTheme = {
     token: {
         // Seed Token
-        colorPrimary: "#fa8c16",
-        colorInfo: "#fa8c16",
+        colorPrimary: '#F59E0B', // Tailwind's yellow-500
+        // colorPrimary: "#fa8c16",
+        // colorInfo: "#fa8c16",
+        colorInfo: '#F59E0B',   // Tailwind's yellow-500
         colorSuccess: '#22C55E', // Tailwind's green-500
         colorWarning: '#FBBF24', // Tailwind's amber-400
         colorError: '#EF4444',   // Tailwind's red-500
@@ -57,7 +59,8 @@ const antdTheme = {
             headerBg: 'transparent',
         },
         Segmented: {
-            itemSelectedBg: "rgb(250,140,22)", // Yellow-500 for selected item
+            // itemSelectedBg: "rgb(250,140,22)", // Yellow-500 for selected item
+            itemSelectedBg: "oklch(79.5% 0.184 86.047)",
             itemSelectedColor: '#000000', // Black text for selected item
             itemColor: '#1F2937',        // Dark gray for unselected item text
             itemHoverBg: '#E5E7EB',      // Tailwind's gray-200 for hover
