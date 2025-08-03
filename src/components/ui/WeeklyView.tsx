@@ -25,7 +25,7 @@ const DayCard = ({ dayData, onClick }: { dayData: DayData, onClick: (date: dayjs
 
 	return (
 		<div
-			className={`bg-zinc-800 rounded-md h-48 px-4 pb-8 pt-4 ${isToday ? "border-2 border-(--primary-yellow)" : ""}`}
+			className={`w-11/12 md:w-60 mx-auto bg-zinc-800 rounded-md h-48 px-4 pb-8 pt-4 ${isToday ? "border-2 border-(--primary-yellow)" : ""}`}
 		>
 			<div className="flex justify-between">
 				<div className="text-lg font-bold">{dayName}</div>
@@ -106,7 +106,7 @@ const WeeklyView = () => {
 
 	return (
 		<div className="">
-			<div className="flex flex-col w-11/12 gap-4 mx-auto my-3">
+			<div className="flex flex-col md:flex-row w-11/12 gap-4 mx-auto my-3">
 				{weekData.map((dayData, index) => (
 					<DayCard key={index} dayData={dayData} onClick={onClick} />
 				))}

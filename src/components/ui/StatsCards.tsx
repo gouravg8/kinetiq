@@ -12,7 +12,7 @@ interface StatCardProps {
 const StatCard = ({ icon, label, value, className = "" }: StatCardProps) => {
 	return (
 		<div
-			className={`bg-zinc-800 w-11/12 mx-auto rounded-md flex items-center py-3 px-4 gap-4 ${className}`}
+			className={`w-11/12 bg-zinc-800 mx-auto rounded-md flex items-center py-3 px-4 gap-4 ${className}`}
 		>
 			<div className="p-2 rounded bg-zinc-700 text-(--primary-yellow)">
 				{icon}
@@ -33,7 +33,7 @@ const StatsCards = () => {
 		{ icon: <Calendar size={24} />, label: "This Month", value: "3" },
 	];
 	return (
-		<div className="flex flex-col gap-3 mb-4">
+		<div className="w-11/12 mx-auto flex flex-col md:flex-row gap-3 mb-4">
 			{stats?.map((item) => (
 				<StatCard icon={item?.icon} label={item?.label} value={item?.value} />
 			))}
