@@ -7,11 +7,12 @@ interface StatCardProps {
 	label: string;
 	value: string | number;
 	className?: string;
+	key: string | number;
 }
 
-const StatCard = ({ icon, label, value, className = "" }: StatCardProps) => {
+const StatCard = ({ icon, label, value, className = "", key }: StatCardProps) => {
 	return (
-		<div
+		<div key={key}
 			className={`w-11/12 bg-zinc-800 mx-auto rounded-md flex items-center py-3 px-4 gap-4 ${className}`}
 		>
 			<div className="p-2 rounded bg-zinc-700 text-(--primary-yellow)">
@@ -35,7 +36,7 @@ const StatsCards = () => {
 	return (
 		<div className="w-11/12 mx-auto flex flex-col md:flex-row gap-3 mb-4">
 			{stats?.map((item) => (
-				<StatCard icon={item?.icon} label={item?.label} value={item?.value} />
+				<StatCard key={item.value} icon={item?.icon} label={item?.label} value={item?.value} />
 			))}
 		</div>
 	);

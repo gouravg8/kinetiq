@@ -39,6 +39,11 @@ interface WorkoutModalProps {
     onClose: () => void;
 }
 
+interface FinishFormValues {
+    bodyPart: string;
+    completed: boolean;
+}
+
 // Sample exercise options
 const exerciseOptions = {
     "Chest": ["Push-ups", "Bench Press", "Incline Press", "Dips"],
@@ -68,7 +73,7 @@ function WorkoutModal({ open, data, date = dayjs(), onSave, onClose }: WorkoutMo
         setExercises(newExercises);
     };
 
-    const handleFinish = (values: any) => {
+    const handleFinish = (values: FinishFormValues) => {
         const filteredExercises = exercises.filter(ex => ex.name.trim() !== '');
         const workoutData: WorkoutType = {
             bodyPart: values.bodyPart || '',
