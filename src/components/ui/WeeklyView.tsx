@@ -40,9 +40,9 @@ const DayCard = ({ dayData, onClick }: { dayData: DayData, onClick: (date: dayjs
 					<div className="mb-1 text-sm font-semibold text-white">
 						{workout.type}
 					</div>
-					<div className="text-xs text-gray-400">
+					{/* <div className="text-xs text-gray-400">
 						{workout.exerciseCount} exercises
-					</div>
+					</div> */}
 				</div>
 			) : (
 				<div className="flex flex-col items-center justify-center h-full -mt-3">
