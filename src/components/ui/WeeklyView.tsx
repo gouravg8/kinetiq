@@ -52,7 +52,7 @@ const WeeklyView = () => {
 
 		return (
 			<div
-				className={`bg-zinc-800 rounded-md px-4 pb-8 pt-4 ${isToday ? "today" : ""}`}
+				className={`bg-zinc-800 rounded-md h-48 px-4 pb-8 pt-4 ${isToday ? "border-2 border-(--primary-yellow)" : ""}`}
 			>
 				<div className="flex justify-between">
 					<div className="text-lg font-bold">{dayName}</div>
@@ -60,7 +60,7 @@ const WeeklyView = () => {
 				</div>
 
 				{workout ? (
-					<div className="flex flex-col items-center justify-center mt-4">
+					<div className="flex flex-col items-center justify-center h-full -mt-3">
 						<div className="flex items-center justify-center w-10 h-10 mb-2 rounded-md bg-(--primary-yellow)">
 							<Dumbbell size={20} className="text-black" />
 						</div>
@@ -72,11 +72,12 @@ const WeeklyView = () => {
 						</div>
 					</div>
 				) : (
-					<div className="flex flex-col items-center justify-center mt-4">
+					<div className="flex flex-col items-center justify-center h-full -mt-3">
 						<Button
 							type="dashed"
 							shape="circle"
-							icon={<Plus className="pt-1" size={20} />}
+							size="large"
+							icon={<Plus className="pt-2" size={24} />}
 							className="mb-2"
 						/>
 						<div className="text-xs text-gray-500">Add workout</div>
