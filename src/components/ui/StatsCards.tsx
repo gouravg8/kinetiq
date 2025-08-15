@@ -10,9 +10,9 @@ interface StatCardProps {
 	key: string | number;
 }
 
-const StatCard = ({ icon, label, value, className = "", key }: StatCardProps) => {
+const StatCard = ({ icon, label, value, className = "" }: StatCardProps) => {
 	return (
-		<div key={key}
+		<div key={value}
 			className={`w-11/12 bg-zinc-800 mx-auto rounded-md flex items-center py-3 px-4 gap-4 ${className}`}
 		>
 			<div className="p-2 rounded bg-zinc-700 text-(--primary-yellow)">
