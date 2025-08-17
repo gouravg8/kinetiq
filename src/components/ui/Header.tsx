@@ -7,9 +7,10 @@ import { useAtom } from "jotai";
 import { authClient } from "@/lib/auth-client";
 import themeAtom from "@/Jotai/themeAtom";
 import { useRouter } from "next/navigation"
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const Profile = ({ items }: MenuProps) => {
-	return <Dropdown className="cursor-pointer" menu={{ items }}>
+	return <Dropdown className="cursor-pointer" menu={{ items }} placement="topRight">
 		<Avatar icon={<User />} />
 	</Dropdown>
 
@@ -19,7 +20,7 @@ const Header = () => {
 	const [timeSegment, setTimeSegment] = useAtom(timeAtom);
 	const [session, setSession] = useState<{ data, error }>({ data: null, error: null });
 	const [themeVal, setThemeVal] = useAtom(themeAtom);
-	const isMobile = window.innerWidth <= 764;
+	const isMobile = useIsMobile();
 
 	const router = useRouter();
 
