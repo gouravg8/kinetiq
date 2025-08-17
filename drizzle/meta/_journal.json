@@ -15,6 +15,41 @@
       "when": 1755333705423,
       "tag": "0001_funny_princess_powerful",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1755434748349,
+      "tag": "0002_yummy_cobalt_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1755435086082,
+      "tag": "0003_tan_magneto",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1755435433863,
+      "tag": "0004_tidy_zodiak",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1755449756001,
+      "tag": "0005_fixed_famine",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1755450037792,
+      "tag": "0006_mature_pretty_boy",
+      "breakpoints": true
     }
   ]
 }
