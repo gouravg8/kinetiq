@@ -65,3 +65,6 @@ export const verifications = pgTable("verifications", {
         () => /* @__PURE__ */ new Date(),
     ),
 });
+
+export type UsersType = typeof users.$inferInsert;
+export type SessionsType = typeof sessions.$inferInsert;
