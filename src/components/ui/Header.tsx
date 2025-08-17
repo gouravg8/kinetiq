@@ -18,7 +18,7 @@ const Profile = ({ items }: MenuProps) => {
 
 const Header = () => {
 	const [timeSegment, setTimeSegment] = useAtom(timeAtom);
-	const [session, setSession] = useState<{ data, error }>({ data: null, error: null });
+	const [session, setSession] = useState({ data: null, error: null });
 	const [themeVal, setThemeVal] = useAtom(themeAtom);
 	const isMobile = useIsMobile();
 
@@ -83,7 +83,7 @@ const Header = () => {
 				{isMobile && <Profile items={items} />}
 			</div>
 			<div className="flex items-center gap-4">
-				<Segmented
+				{/* <Segmented
 					className="w-fit mx-auto bg-(--card-black)"
 					value={timeSegment}
 					onChange={(value: timeType) => {
@@ -103,7 +103,7 @@ const Header = () => {
 							value: "analytics",
 						},
 					]}
-				/>
+				/> */}
 				{!isMobile && <Profile items={items} />}
 			</div>
 		</header>
