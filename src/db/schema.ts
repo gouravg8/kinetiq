@@ -3,7 +3,9 @@ import {
     text,
     timestamp,
     boolean,
-    integer,
+    uuid,
+    date,
+    uniqueIndex
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
@@ -65,6 +67,20 @@ export const verifications = pgTable("verifications", {
         () => /* @__PURE__ */ new Date(),
     ),
 });
+
+export const dailyLogs = pgTable("daily_logs", {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    dateOnly: date("date_only").notNull(),
+    date: timestamp("date", { mode: "date" }).notNull().defaultNow(),
+    updatedOn: timestamp("updated_on", { mode: "date" }).notNull().defaultNow(),
+    bodyPart: text("body_part").notNull(),
+    isCompleted: boolean("is_completed").notNull().default(false),
+},
+    (table) => ({
+        userDateUnique: uniqueIndex("user_date_unique").on(table.userId, table.dateOnly),
+    })
+)
 
 export type UsersType = typeof users.$inferInsert;
 export type SessionsType = typeof sessions.$inferInsert;

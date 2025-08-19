@@ -1,27 +1,37 @@
 "use client";
 import React, { useState } from "react";
-import { Button, Typography } from "antd";
+import { Button, message, Typography } from "antd";
 import { Plus, Dumbbell } from "lucide-react";
 import dayjs from "dayjs";
 import { useAtomValue } from "jotai";
 import { dateAtom, timeAtom } from "@/Jotai/timeAtom";
 import WorkoutModal, { WorkoutType } from "./WorkoutModal";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import api from "@/lib/axios";
+import { toast } from "sonner";
 
-interface WorkoutData {
-	type: string;
-	exerciseCount: number;
+export interface LogsDataType {
+	id: string;
+	userId?: string;
+	dateOnly?: string; // Format: YYYY-MM-DD
+	date: string; // ISO timestamp
+	updatedOn?: string; // ISO timestamp
+	bodyPart: string;
+	isCompleted: boolean;
 }
 
-interface DayData {
-	date: dayjs.Dayjs;
-	workout?: WorkoutData;
-}
+const DayCard = ({ dayData, onClick, setModal }:
+	{ dayData: LogsDataType, onClick: (date: LogsDataType) => void, setModal: React.Dispatch<React.SetStateAction<{ open: boolean, data: LogsDataType }>> }) => {
+	const dayName = dayjs(dayData?.date)?.format("ddd");
+	const dayNumber = dayjs(dayData?.date)?.format("D");
+	const isToday = dayjs(dayData?.date)?.isSame(dayjs(), "day");
 
-const DayCard = ({ dayData, onClick }: { dayData: DayData, onClick: (date: dayjs.Dayjs) => void }) => {
-	const { date, workout } = dayData;
-	const dayName = date.format("ddd");
-	const dayNumber = date.format("D");
-	const isToday = date.isSame(dayjs(), "day");
+	const handleClick = () => {
+		if (isToday) {
+			onClick(dayData);
+			setModal({ open: true, data: dayData });
+		}
+	}
 
 	return (
 		<div
@@ -32,13 +42,13 @@ const DayCard = ({ dayData, onClick }: { dayData: DayData, onClick: (date: dayjs
 				<div className="text-lg font-bold text-zinc-500">{dayNumber}</div>
 			</div>
 
-			{workout ? (
-				<div className="flex flex-col items-center justify-center h-full -mt-3" onClick={() => onClick(date)}>
+			{dayData?.bodyPart ? (
+				<div className="flex flex-col items-center justify-center h-full -mt-3" onClick={handleClick}>
 					<div className="flex items-center justify-center w-10 h-10 mb-2 rounded-md bg-(--primary-yellow)">
 						<Dumbbell size={20} className="text-black" />
 					</div>
 					<div className="mb-1 text-sm font-semibold text-white">
-						{workout.type}
+						{dayData?.bodyPart}
 					</div>
 					{/* <div className="text-xs text-gray-400">
 						{workout.exerciseCount} exercises
@@ -52,7 +62,7 @@ const DayCard = ({ dayData, onClick }: { dayData: DayData, onClick: (date: dayjs
 						size="large"
 						icon={<Plus className="pt-2" size={24} />}
 						className="mb-2"
-						onClick={() => onClick(date)}
+						onClick={() => onClick(dayData)}
 					/>
 					<div className="text-xs text-gray-500">Add workout</div>
 				</div>
@@ -64,40 +74,61 @@ const DayCard = ({ dayData, onClick }: { dayData: DayData, onClick: (date: dayjs
 const WeeklyView = () => {
 	const timeSegment = useAtomValue(timeAtom);
 	const currentDate = useAtomValue(dateAtom);
-	const [modal, setModal] = useState<{ open: boolean, data: WorkoutType }>({ open: false, data: { bodyPart: "", completed: false, exercises: [] } });
+	const [modal, setModal] = useState<{ open: boolean, data: LogsDataType }>({ open: false, data: { id: "", date: ",", bodyPart: "", isCompleted: false } });
 	const [selectedDate, setSelectedDate] = useState();
 
 	const { Text } = Typography;
 
+	const onClick = (date: LogsDataType) => {
+		setModal(prev => ({ ...prev, open: true }))
+	}
+
+	const { data: logsData, isError, error, isLoading, refetch } = useQuery({
+		queryKey: ["get-workout"],
+		queryFn: () => {
+			const startOfWeek = currentDate.startOf("week").format("YYYY-MM-DD");
+			const endOfWeek = currentDate.endOf("week").format("YYYY-MM-DD");
+			console.log({ startOfWeek, endOfWeek });
+
+			return api.get(`/api/logs?fromDate=${startOfWeek}&toDate=${endOfWeek}`)
+		},
+		// enabled: false,
+		retry: false
+	})
+
 	// Generate week data
-	const generateWeekData = (): DayData[] => {
+	const generateWeekData = (logsData: LogsDataType[]): LogsDataType[] => {
 		const startOfWeek = currentDate.startOf("week");
-		const weekData: DayData[] = [];
+		const weekData: LogsDataType[] = [];
 
 		for (let i = 0; i < 7; i++) {
 			const date = startOfWeek.add(i, "day");
-			let workout: WorkoutData | undefined;
+			const todayData = logsData?.filter(
+				(item: LogsDataType) => dayjs(item.date).isSame(date, "day")
+			)[0];
 
-			// Sample workout data
-			if (i === 0) workout = { type: "Chest", exerciseCount: 2 };
-			if (i === 2) workout = { type: "Back", exerciseCount: 2 };
-			if (i === 4) workout = { type: "Legs", exerciseCount: 1 };
-
-			weekData.push({ date, workout });
+			weekData.push(todayData ?? { id: i, date, bodyPart: "" });
 		}
 
 		return weekData;
 	};
 
-	const weekData = generateWeekData();
 
-	const onClick = (date: dayjs.Dayjs) => {
-		setModal(prev => ({ ...prev, open: true }))
-		console.log({ date });
-	}
+	const workoutMutation = useMutation({
+		mutationKey: ["save-workout"],
+		mutationFn: (data: WorkoutType) => api.post("/api/logs", data),
+		onSuccess: () => {
+			refetch();
+			toast.success("Todays workout updated!");
+		},
+		onError: (error) => {
+			toast.error(error?.message || "Issue while updating workout");
+		}
+	})
 
 	const handleSaveWorkout = ({ date, workoutData }: { date: dayjs.Dayjs, workoutData: WorkoutType }) => {
-		console.log({ date, workoutData });
+		console.log("hi from add workout client", { workoutData });
+		const data = workoutMutation.mutate(workoutData);
 	}
 
 	if (timeSegment !== "week") {
@@ -107,8 +138,8 @@ const WeeklyView = () => {
 	return (
 		<div className="">
 			<div className="flex flex-col md:flex-row w-11/12 gap-4 mx-auto my-3">
-				{weekData.map((dayData, index) => (
-					<DayCard key={index} dayData={dayData} onClick={onClick} />
+				{generateWeekData(logsData?.data)?.map((dayData: LogsDataType, index: number) => (
+					<DayCard key={index} dayData={dayData} onClick={onClick} setModal={setModal} />
 				))}
 			</div>
 			<WorkoutModal

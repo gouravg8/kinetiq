@@ -1,4 +1,4 @@
-import { adapter, drizzleClient } from "@/db"
+import { drizzleClient } from "@/db"
 import { betterAuth } from "better-auth"
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import * as schema from "../../auth-schema";

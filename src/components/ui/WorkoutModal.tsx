@@ -14,6 +14,7 @@ import {
     Typography,
     Checkbox
 } from "antd";
+import { LogsDataType } from "./WeeklyView";
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -27,13 +28,13 @@ type Exercise = {
 
 export type WorkoutType = {
     bodyPart: string;
-    exercises: Exercise[];
-    completed: boolean;
+    // exercises: Exercise[];
+    isCompleted: boolean;
 };
 
 interface WorkoutModalProps {
     open: boolean;
-    data?: WorkoutType;
+    data?: LogsDataType;
     date?: dayjs.Dayjs;
     onSave: (date: dayjs.Dayjs, workoutData: WorkoutType) => void;
     onClose: () => void;
@@ -56,29 +57,29 @@ const exerciseOptions = {
 
 function WorkoutModal({ open, data, date = dayjs(), onSave, onClose }: WorkoutModalProps) {
     const [form] = Form.useForm();
-    const [exercises, setExercises] = useState<Exercise[]>(data?.exercises || []);
+    // const [exercises, setExercises] = useState<Exercise[]>(data?.exercises || []);
 
-    const handleAddExercise = () => {
-        setExercises([...exercises, { name: '', sets: '', reps: '', weight: '' }]);
-    };
+    // const handleAddExercise = () => {
+    //     setExercises([...exercises, { name: '', sets: '', reps: '', weight: '' }]);
+    // };
 
-    const handleExerciseChange = (index: number, field: keyof Exercise, value: string) => {
-        const newExercises = [...exercises];
-        newExercises[index][field] = value;
-        setExercises(newExercises);
-    };
+    // const handleExerciseChange = (index: number, field: keyof Exercise, value: string) => {
+    //     const newExercises = [...exercises];
+    //     newExercises[index][field] = value;
+    //     setExercises(newExercises);
+    // };
 
-    const handleRemoveExercise = (index: number) => {
-        const newExercises = exercises.filter((_, i) => i !== index);
-        setExercises(newExercises);
-    };
+    // const handleRemoveExercise = (index: number) => {
+    //     const newExercises = exercises.filter((_, i) => i !== index);
+    //     setExercises(newExercises);
+    // };
 
     const handleFinish = (values: FinishFormValues) => {
-        const filteredExercises = exercises.filter(ex => ex.name.trim() !== '');
+        // const filteredExercises = exercises.filter(ex => ex.name.trim() !== '');
         const workoutData: WorkoutType = {
             bodyPart: values.bodyPart || '',
-            exercises: filteredExercises,
-            completed: values.completed || false
+            // exercises: filteredExercises,
+            isCompleted: values.completed || false
         };
         onSave(date, workoutData);
         onClose();
@@ -86,7 +87,7 @@ function WorkoutModal({ open, data, date = dayjs(), onSave, onClose }: WorkoutMo
 
     const handleCancel = () => {
         form.resetFields();
-        setExercises(data?.exercises || []);
+        // setExercises(data?.exercises || []);
         onClose();
     };
 
@@ -99,6 +100,7 @@ function WorkoutModal({ open, data, date = dayjs(), onSave, onClose }: WorkoutMo
             centered
             width={600}
             className="workout-modal"
+            destroyOnHidden
         >
             <Form
                 form={form}
@@ -106,7 +108,7 @@ function WorkoutModal({ open, data, date = dayjs(), onSave, onClose }: WorkoutMo
                 onFinish={handleFinish}
                 initialValues={{
                     bodyPart: data?.bodyPart || undefined,
-                    completed: data?.completed || false
+                    completed: data?.isCompleted || false
                 }}
             >
                 <Form.Item
