@@ -82,7 +82,7 @@ const Header = () => {
 							<Dumbbell className="w-6 h-6 text-black" size={24} />
 						</div>
 						<div>
-							<h1 className="text-2xl md:text-3xl font-bold text-white">Workout Tracker</h1>
+							<h1 className="text-2xl md:text-3xl font-bold text-white">Kinetiq</h1>
 							<p className="text-zinc-400 text-sm">Track your fitness journey</p>
 						</div>
 					</div>
