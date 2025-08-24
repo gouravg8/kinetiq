@@ -1,14 +1,73 @@
 "use client";
-import { BarChart2, Dumbbell, Moon, Sun } from "lucide-react";
-import React, { useState } from "react";
-import { Segmented } from "antd";
-import { timeAtom, timeType } from "@/Jotai/timeAtom";
-import { useAtom, useSetAtom } from "jotai";
-import { useTheme } from "next-themes";
+import { Dumbbell, User } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Avatar, Dropdown, MenuProps } from "antd";
+// import { timeAtom, timeType } from "@/Jotai/timeAtom";
+// import { useAtom } from "jotai";
+import { authClient } from "@/lib/auth-client";
+// import themeAtom from "@/Jotai/themeAtom";
+import { useRouter } from "next/navigation"
+import { useIsMobile } from "@/hooks/useIsMobile";
+
+
+type SessionType = Awaited<ReturnType<typeof authClient.getSession>>;
+
+const Profile = ({ items }: MenuProps) => {
+	return <Dropdown className="cursor-pointer" menu={{ items }} placement="topRight">
+		<Avatar icon={<User />} />
+	</Dropdown>
+
+}
 
 const Header = () => {
-	const { theme, setTheme } = useTheme();
-	const [timeSegment, setTimeSegment] = useAtom(timeAtom);
+	// const [timeSegment, setTimeSegment] = useAtom(timeAtom);
+	const [session, setSession] = useState({ data: null, error: null });
+	// const [themeVal, setThemeVal] = useAtom(themeAtom);
+	const isMobile = useIsMobile();
+
+	const router = useRouter();
+
+	const data = async () => {
+		const d = await authClient.getSession();
+
+		setSession(d as SessionType);
+	}
+
+	useEffect(() => { data() }, []);
+
+	const items: MenuProps['items'] = [
+		// {
+		// 	key: '1',
+		// 	label: 'My Account',
+		// 	disabled: true,
+		// },
+		// {
+		// 	type: 'divider',
+		// },
+		// {
+		// 	key: '2',
+		// 	label: "Theme",
+		// 	extra: themeVal === "dark" ? <Moon size={"12"} /> : <Sun size={"12"} />,
+		// 	onClick: () => setThemeVal(prev => {
+		// 		if (prev === "dark") return "light";
+		// 		return "dark";
+		// 	})
+		// },
+		!session?.data ?
+			{
+				key: "signin",
+				label: "Sign in",
+				onClick: () => router.push("/signin")
+			} :
+			{
+				key: '3',
+				label: 'Logout',
+				danger: true,
+				onClick: () => authClient.signOut()
+			},
+	];
+
+
 	return (
 		<header className="flex flex-col items-center justify-between gap-4 mt-4 mb-8 md:flex-row">
 			<div className="flex items-center gap-4">
@@ -24,40 +83,32 @@ const Header = () => {
 						<p className="text-gray-400">Track your fitness journey</p>
 					</div>
 				</div>
-				<button
-					onClick={() =>
-						setTheme((prev) => (prev === "dark" ? "light" : "dark"))
-					}
-					className="p-2 rounded-full bg-gray-200 dark:bg-[#1C1C1E] hover:bg-gray-300 dark:hover:bg-gray-800 transition cursor-pointer"
-				>
-					{theme === "dark" ? (
-						<Sun size={20} className="text-(--primary-yellow)" />
-					) : (
-						<Moon size={20} className="text-(--primary-yellow)" />
-					)}
-				</button>
+				{isMobile && <Profile items={items} />}
 			</div>
-			<Segmented
-				className="w-fit mx-auto bg-(--card-black)"
-				value={timeSegment}
-				onChange={(value: timeType) => {
-					if (value) {
-						setTimeSegment(value);
-					}
-				}}
-				options={[
-					{ label: "Week", value: "week" },
-					{ label: "Month", value: "month" },
-					{
-						label: (
-							<p className="flex items-center gap-2">
-								<BarChart2 size={16} /> Analytics
-							</p>
-						),
-						value: "analytics",
-					},
-				]}
-			/>
+			<div className="flex items-center gap-4">
+				{/* <Segmented
+					className="w-fit mx-auto bg-(--card-black)"
+					value={timeSegment}
+					onChange={(value: timeType) => {
+						if (value) {
+							setTimeSegment(value);
+						}
+					}}
+					options={[
+						{ label: "Week", value: "week" },
+						{ label: "Month", value: "month" },
+						{
+							label: (
+								<p className="flex items-center gap-2">
+									<BarChart2 size={16} /> Analytics
+								</p>
+							),
+							value: "analytics",
+						},
+					]}
+				/> */}
+				{!isMobile && <Profile items={items} />}
+			</div>
 		</header>
 	);
 };

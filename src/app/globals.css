@@ -40,7 +40,7 @@
 	--transition-slow: 0.5s ease;
 }
 
-[data-theme="dark"] {
+:root[data-theme="dark"] {
 	/* Primary Colors */
 	--primary-black: #0a0a0a;
 	--secondary-black: #1a1a1a;
@@ -85,6 +85,12 @@
 	padding: 0;
 } */
 
+
+@theme {
+  --color-primary-yellow: oklch(79.5% 0.184 86.047deg);
+  --color-secondary-yellow: #fbbf24;
+}
+
 html {
 	scroll-behavior: smooth;
 }
@@ -103,196 +109,4 @@ body {
 	max-width: 1200px;
 	margin: 0 auto;
 	padding: 0 1rem;
-}
-
-/* Ant Design Typography Overrides */
-.ant-typography {
-	color: var(--text-primary) !important;
-}
-
-.ant-typography-title {
-	color: var(--text-primary) !important;
-}
-
-.ant-typography-paragraph {
-	color: var(--text-primary) !important;
-}
-
-.ant-typography-text {
-	color: var(--text-primary) !important;
-}
-
-.ant-typography-caption {
-	color: var(--text-secondary) !important;
-}
-
-/* Ant Design Button Overrides */
-.ant-btn-primary {
-	background-color: var(--primary-yellow) !important;
-	border-color: var(--primary-yellow) !important;
-	color: var(--primary-black) !important;
-	font-weight: 600;
-	transition: all var(--transition-fast);
-}
-
-.ant-btn-primary:hover,
-.ant-btn-primary:focus {
-	background-color: var(--secondary-yellow) !important;
-	border-color: var(--secondary-yellow) !important;
-	color: var(--primary-black) !important;
-	transform: translateY(-1px);
-	box-shadow: var(--shadow-md);
-}
-
-.ant-btn-dashed {
-	background-color: rgba(245, 158, 11, 0.1) !important;
-	border-color: var(--primary-yellow) !important;
-	color: var(--primary-yellow) !important;
-	transition: all var(--transition-fast);
-}
-
-.ant-btn-dashed:hover,
-.ant-btn-dashed:focus {
-	background-color: rgba(245, 158, 11, 0.2) !important;
-	border-color: var(--secondary-yellow) !important;
-	color: var(--secondary-yellow) !important;
-	transform: scale(1.05);
-}
-
-/* Ant Design Modal Overrides */
-.ant-modal-content {
-	background-color: var(--card-black) !important;
-	border-radius: var(--radius-lg);
-	box-shadow: var(--shadow-lg);
-}
-
-.ant-modal-header {
-	background-color: var(--card-black) !important;
-	border-bottom: 1px solid var(--border-black) !important;
-}
-
-.ant-modal-title {
-	color: var(--text-primary) !important;
-}
-
-.ant-modal-close-x {
-	color: var(--text-muted) !important;
-}
-
-.ant-modal-close-x:hover {
-	color: var(--primary-yellow) !important;
-}
-
-.ant-modal-body {
-	background-color: var(--card-black) !important;
-	color: var(--text-primary) !important;
-}
-
-/* Ant Design Form Overrides */
-.ant-form-item-label > label {
-	color: var(--text-primary) !important;
-}
-
-.ant-input {
-	background-color: var(--secondary-black) !important;
-	border-color: var(--border-black) !important;
-	color: var(--text-primary) !important;
-	border-radius: var(--radius-sm);
-}
-
-.ant-input:hover,
-.ant-input:focus {
-	border-color: var(--primary-yellow) !important;
-	box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2) !important;
-}
-
-.ant-input::placeholder {
-	color: var(--text-muted) !important;
-}
-
-.ant-select {
-	background-color: var(--secondary-black) !important;
-}
-
-.ant-select .ant-select-selector {
-	background-color: var(--secondary-black) !important;
-	border-color: var(--border-black) !important;
-	color: var(--text-primary) !important;
-	border-radius: var(--radius-sm) !important;
-}
-
-.ant-select .ant-select-selection-placeholder {
-	color: var(--text-muted) !important;
-}
-
-.ant-select-single .ant-select-selector .ant-select-selection-search-input {
-	color: var(--text-primary) !important;
-}
-
-.ant-select-single .ant-select-selector .ant-select-selection-search-input::placeholder {
-	color: var(--text-muted) !important;
-}
-
-.ant-select:hover .ant-select-selector,
-.ant-select.ant-select-focused .ant-select-selector {
-	border-color: var(--primary-yellow) !important;
-	box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2) !important;
-}
-
-.ant-select-dropdown {
-	background-color: var(--card-black) !important;
-	border: 1px solid var(--border-black) !important;
-	border-radius: var(--radius-sm);
-	box-shadow: var(--shadow-lg) !important;
-}
-
-.ant-select-item {
-	color: var(--text-primary) !important;
-}
-
-.ant-select-item:hover {
-	background-color: var(--border-black) !important;
-}
-
-.ant-select-item-option-selected {
-	background-color: var(--primary-yellow) !important;
-	color: var(--primary-black) !important;
-}
-
-/* Ant Design Switch Overrides */
-.ant-switch {
-	background-color: var(--border-black) !important;
-}
-
-.ant-switch-checked {
-	background-color: var(--primary-yellow) !important;
-}
-
-/* Workout Modal Specific Styles */
-.workout-modal .ant-modal-content {
-	background-color: var(--card-black) !important;
-}
-
-.workout-modal .exercises-section {
-	max-height: 300px;
-	overflow-y: auto;
-	padding-right: 8px;
-}
-
-.workout-modal .exercises-section::-webkit-scrollbar {
-	width: 6px;
-}
-
-.workout-modal .exercises-section::-webkit-scrollbar-track {
-	background: var(--secondary-black);
-	border-radius: var(--radius-sm);
-}
-
-.workout-modal .exercises-section::-webkit-scrollbar-thumb {
-	background: var(--border-black);
-	border-radius: var(--radius-sm);
-}
-
-.workout-modal .exercises-section::-webkit-scrollbar-thumb:hover {
-	background: var(--primary-yellow);
 }
