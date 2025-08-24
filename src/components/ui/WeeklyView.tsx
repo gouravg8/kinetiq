@@ -85,7 +85,6 @@ const WeeklyView = () => {
 		queryFn: () => {
 			const startOfWeek = currentDate.startOf("week").format("YYYY-MM-DD");
 			const endOfWeek = currentDate.endOf("week").format("YYYY-MM-DD");
-			console.log({ startOfWeek, endOfWeek });
 
 			return api.get(`/api/logs?fromDate=${startOfWeek}&toDate=${endOfWeek}`)
 		},

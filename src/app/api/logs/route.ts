@@ -41,9 +41,6 @@ export async function GET(req: NextRequest) {
         )
         .orderBy(asc(dailyLogs.date))
 
-    console.log({ data });
-
-
     return NextResponse.json(data, { status: 200 });
 }
 
