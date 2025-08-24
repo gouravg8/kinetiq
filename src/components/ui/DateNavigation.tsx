@@ -1,10 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { Button, DatePicker, Space } from "antd";
+import { Button, Space } from "antd";
 import {
 	LeftOutlined,
 	RightOutlined,
-	CalendarOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -43,11 +42,11 @@ const DateNavigation = () => {
 	};
 
 	// Handle date picker change
-	const handleDateChange = (date: React.SetStateAction<dayjs.Dayjs>) => {
-		if (date) {
-			setCurrentDate(date);
-		}
-	};
+	// const handleDateChange = (date: React.SetStateAction<dayjs.Dayjs>) => {
+	// 	if (date) {
+	// 		setCurrentDate(date);
+	// 	}
+	// };
 
 	// Format the period range display
 	const formatPeriodRange = () => {

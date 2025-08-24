@@ -1,30 +1,24 @@
 "use client";
-import dayjs from "dayjs";
-import { Plus, Save, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { Save } from "lucide-react";
 import {
     Modal,
     Form,
     Select,
-    Input,
     Button,
-    Switch,
     Space,
-    Card,
     Typography,
     Checkbox
 } from "antd";
 import { LogsDataType } from "./WeeklyView";
 
 const { Option } = Select;
-const { Title } = Typography;
 
-type Exercise = {
-    name: string;
-    sets: string;
-    reps: string;
-    weight: string;
-};
+// type Exercise = {
+//     name: string;
+//     sets: string;
+//     reps: string;
+//     weight: string;
+// };
 
 export type WorkoutType = {
     bodyPart: string;
@@ -35,8 +29,7 @@ export type WorkoutType = {
 interface WorkoutModalProps {
     open: boolean;
     data?: LogsDataType;
-    date?: dayjs.Dayjs;
-    onSave: (date: dayjs.Dayjs, workoutData: WorkoutType) => void;
+    onSave: (workoutData: WorkoutType) => void;
     onClose: () => void;
 }
 
@@ -55,7 +48,7 @@ const exerciseOptions = {
     "Core": ["Planks", "Crunches", "Russian Twists", "Leg Raises"]
 };
 
-function WorkoutModal({ open, data, date = dayjs(), onSave, onClose }: WorkoutModalProps) {
+function WorkoutModal({ open, data, onSave, onClose }: WorkoutModalProps) {
     const [form] = Form.useForm();
     // const [exercises, setExercises] = useState<Exercise[]>(data?.exercises || []);
 
@@ -81,7 +74,7 @@ function WorkoutModal({ open, data, date = dayjs(), onSave, onClose }: WorkoutMo
             // exercises: filteredExercises,
             isCompleted: values.completed || false
         };
-        onSave(date, workoutData);
+        onSave(workoutData);
         onClose();
     };
 

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Button, message, Typography } from "antd";
+import { Button } from "antd";
 import { Plus, Dumbbell } from "lucide-react";
 import dayjs from "dayjs";
 import { useAtomValue } from "jotai";
@@ -75,15 +75,12 @@ const WeeklyView = () => {
 	const timeSegment = useAtomValue(timeAtom);
 	const currentDate = useAtomValue(dateAtom);
 	const [modal, setModal] = useState<{ open: boolean, data: LogsDataType }>({ open: false, data: { id: "", date: ",", bodyPart: "", isCompleted: false } });
-	const [selectedDate, setSelectedDate] = useState();
 
-	const { Text } = Typography;
-
-	const onClick = (date: LogsDataType) => {
+	const onClick = () => {
 		setModal(prev => ({ ...prev, open: true }))
 	}
 
-	const { data: logsData, isError, error, isLoading, refetch } = useQuery({
+	const { data: logsData, refetch } = useQuery({
 		queryKey: ["get-workout"],
 		queryFn: () => {
 			const startOfWeek = currentDate.startOf("week").format("YYYY-MM-DD");
@@ -126,9 +123,8 @@ const WeeklyView = () => {
 		}
 	})
 
-	const handleSaveWorkout = ({ date, workoutData }: { date: dayjs.Dayjs, workoutData: WorkoutType }) => {
-		console.log("hi from add workout client", { workoutData });
-		const data = workoutMutation.mutate(workoutData);
+	const handleSaveWorkout = ({ workoutData }: { workoutData: WorkoutType }) => {
+		workoutMutation.mutate(workoutData);
 	}
 
 	if (timeSegment !== "week") {
@@ -146,8 +142,7 @@ const WeeklyView = () => {
 				open={modal.open}
 				data={modal.data}
 				// data={workoutData}
-				date={selectedDate}
-				onSave={(date, workoutData) => handleSaveWorkout({ date, workoutData })}
+				onSave={(workoutData) => handleSaveWorkout({ workoutData })}
 				onClose={() => setModal(prev => ({ ...prev, open: false }))}
 			/>
 		</div>

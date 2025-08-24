@@ -1,13 +1,16 @@
 "use client";
-import { BarChart2, Dumbbell, Moon, Sun, User } from "lucide-react";
+import { Dumbbell, User } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { Avatar, Dropdown, MenuProps, Segmented } from "antd";
-import { timeAtom, timeType } from "@/Jotai/timeAtom";
-import { useAtom } from "jotai";
+import { Avatar, Dropdown, MenuProps } from "antd";
+// import { timeAtom, timeType } from "@/Jotai/timeAtom";
+// import { useAtom } from "jotai";
 import { authClient } from "@/lib/auth-client";
-import themeAtom from "@/Jotai/themeAtom";
+// import themeAtom from "@/Jotai/themeAtom";
 import { useRouter } from "next/navigation"
 import { useIsMobile } from "@/hooks/useIsMobile";
+
+
+type SessionType = Awaited<ReturnType<typeof authClient.getSession>>;
 
 const Profile = ({ items }: MenuProps) => {
 	return <Dropdown className="cursor-pointer" menu={{ items }} placement="topRight">
@@ -17,9 +20,9 @@ const Profile = ({ items }: MenuProps) => {
 }
 
 const Header = () => {
-	const [timeSegment, setTimeSegment] = useAtom(timeAtom);
+	// const [timeSegment, setTimeSegment] = useAtom(timeAtom);
 	const [session, setSession] = useState({ data: null, error: null });
-	const [themeVal, setThemeVal] = useAtom(themeAtom);
+	// const [themeVal, setThemeVal] = useAtom(themeAtom);
 	const isMobile = useIsMobile();
 
 	const router = useRouter();
@@ -27,7 +30,7 @@ const Header = () => {
 	const data = async () => {
 		const d = await authClient.getSession();
 
-		setSession(d as any);
+		setSession(d as SessionType);
 	}
 
 	useEffect(() => { data() }, []);
