@@ -6,8 +6,6 @@ import { getSessionCookie } from "better-auth/cookies";
 export async function middleware(request: NextRequest) {
     const sessionCookie = getSessionCookie(request);
 
-    console.log({ sessionCookie });
-
     const protectedRoutes = ['/dashboard', '/profile', '/settings'];
     const isProtected = protectedRoutes.some((route) =>
         request.nextUrl.pathname.startsWith(route)
