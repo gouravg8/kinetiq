@@ -76,7 +76,7 @@ const Header = () => {
 	return (
 		<header className="sticky top-0 z-50 bg-(--primary-black) backdrop-blur-2xl">
 			<div className="md:max-w-7xl w-full mx-auto flex flex-col items-center justify-between gap-4 md:flex-row py-4">
-				<div className="flex items-center gap-4">
+				<div className="flex items-center gap-4 cursor-pointer" onClick={() => router.push("/")}>
 					<div className="flex items-center gap-4">
 						<div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 shadow-lg">
 							<Dumbbell className="w-6 h-6 text-black" size={24} />

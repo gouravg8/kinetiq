@@ -6,6 +6,7 @@ import { ConfigProvider, theme } from "antd";
 import { Provider, useAtomValue } from "jotai";
 import React from "react";
 import { Toaster } from "sonner";
+import Header from "./ui/Header";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
 	const isDark = useAtomValue(themeAtom);
@@ -23,6 +24,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 			algorithm: theme.darkAlgorithm
 		}}>
 			<QueryClientProvider client={queryClient}>
+				<Header />
 				{children}
 				<Toaster position="top-center" richColors />
 			</QueryClientProvider>

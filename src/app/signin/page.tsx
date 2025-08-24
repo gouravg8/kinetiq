@@ -10,11 +10,12 @@ const Signin = () => {
         await authClient.signIn.social({ provider: "google" });
     }
     return (
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center h-[80vh]">
             <Button
                 onClick={handleLogin}
                 className="mx-auto"
                 icon={<GoogleOutlined />}
+                size='large'
             >
                 Continue Sign In
             </Button>
