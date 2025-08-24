@@ -69,24 +69,25 @@ const Header = () => {
 
 
 	return (
-		<header className="flex flex-col items-center justify-between gap-4 mt-4 mb-8 md:flex-row">
-			<div className="flex items-center gap-4">
+		<header className="sticky top-0 z-50 bg-(--primary-black)">
+			<div className="container mx-auto flex flex-col items-center justify-between gap-4 md:flex-row py-3">
 				<div className="flex items-center gap-4">
-					<div className="flex items-center justify-center w-12 h-12 rounded-md bg-accent">
-						<Dumbbell
-							className="w-20 h-12 px-2 text-black rounded bg-(--primary-yellow) "
-							size={58}
-						/>
+					<div className="flex items-center gap-4">
+						<div className="flex items-center justify-center w-12 h-12 rounded-md bg-accent">
+							<Dumbbell
+								className="w-20 h-12 px-2 text-black rounded bg-(--primary-yellow) "
+								size={58}
+							/>
+						</div>
+						<div>
+							<h1 className="text-3xl font-bold">Workout Tracker</h1>
+							<p className="text-gray-400">Track your fitness journey</p>
+						</div>
 					</div>
-					<div>
-						<h1 className="text-3xl font-bold">Workout Tracker</h1>
-						<p className="text-gray-400">Track your fitness journey</p>
-					</div>
+					{isMobile && <Profile items={items} />}
 				</div>
-				{isMobile && <Profile items={items} />}
-			</div>
-			<div className="flex items-center gap-4">
-				{/* <Segmented
+				<div className="flex items-center gap-4">
+					{/* <Segmented
 					className="w-fit mx-auto bg-(--card-black)"
 					value={timeSegment}
 					onChange={(value: timeType) => {
@@ -94,7 +95,7 @@ const Header = () => {
 							setTimeSegment(value);
 						}
 					}}
-					options={[
+					optons={[
 						{ label: "Week", value: "week" },
 						{ label: "Month", value: "month" },
 						{
@@ -107,7 +108,8 @@ const Header = () => {
 						},
 					]}
 				/> */}
-				{!isMobile && <Profile items={items} />}
+					{!isMobile && <Profile items={items} />}
+				</div>
 			</div>
 		</header>
 	);
