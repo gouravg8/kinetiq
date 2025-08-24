@@ -132,7 +132,7 @@ const WeeklyView = () => {
 
 	return (
 		<div className="">
-			<div className="flex flex-col md:flex-row w-11/12 gap-4 mx-auto my-3">
+			<div className="flex flex-col md:flex-row gap-4 mx-auto my-3">
 				{generateWeekData(logsData?.data)?.map((dayData: LogsDataType, index: number) => (
 					<DayCard key={index} dayData={dayData} onClick={onClick} setModal={setModal} />
 				))}
