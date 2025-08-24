@@ -63,7 +63,7 @@ const DateNavigation = () => {
 	};
 
 	return (
-		<div className="px-2 py-1 mx-auto rounded bg-zinc-800 w-fit">
+		<div className="px-2 py-1 mt-4 mx-auto rounded bg-zinc-800 w-fit">
 			<Space align="center">
 				{/* Previous period Button */}
 				<Button
