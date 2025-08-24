@@ -35,7 +35,7 @@ const DayCard = ({ dayData, onClick, setModal }:
 
 	return (
 		<div
-			className={`w-11/12 md:w-60 mx-auto bg-zinc-800 rounded-md h-48 px-4 pb-8 pt-4 ${isToday ? "border-2 border-(--primary-yellow)" : ""}`}
+			className={`w-11/12 md:w-60 mx-auto bg-zinc-800 rounded-md h-48 px-4 pb-8 pt-4 ${isToday ? "border-2 border-(--primary-yellow) cursor-pointer" : ""}`}
 		>
 			<div className="flex justify-between">
 				<div className="text-lg font-bold">{dayName}</div>
@@ -62,6 +62,7 @@ const DayCard = ({ dayData, onClick, setModal }:
 						size="large"
 						icon={<Plus className="pt-2" size={24} />}
 						className="mb-2"
+						disabled={!isToday}
 						onClick={() => onClick(dayData)}
 					/>
 					<div className="text-xs text-gray-500">Add workout</div>
