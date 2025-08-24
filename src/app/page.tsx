@@ -185,7 +185,7 @@ export default function LandingPage() {
 							<Col xs={24} sm={12} lg={6} key={index}>
 								<Card
 									className="!bg-zinc-900 !border-gray-800 hover:!border-yellow-500/50 transition-all duration-300 h-full"
-									bodyStyle={{ padding: "20px" }}
+									styles={{ body: { padding: "20px" } }}
 								>
 									<Space direction="vertical" size="middle" className="w-full">
 										<div className="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-500/10 rounded-lg flex items-center justify-center">
