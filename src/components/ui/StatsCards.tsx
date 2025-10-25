@@ -34,7 +34,7 @@ const StatsCards = () => {
 		{ icon: <Calendar size={24} />, label: "This Month", value: "3" },
 	];
 	return (
-		<div className="w-11/12 mx-auto flex flex-col md:flex-row gap-3 mb-4">
+		<div className="flex flex-col md:flex-row gap-3 mb-4">
 			{stats?.map((item) => (
 				<StatCard key={item.value} icon={item?.icon} label={item?.label} value={item?.value} />
 			))}
