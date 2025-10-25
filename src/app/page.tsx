@@ -11,11 +11,14 @@ import {
 	ThunderboltOutlined,
 } from "@ant-design/icons"
 import { useRouter } from "next/navigation"
+import { useAtomValue } from "jotai"
+import { userAtom } from "@/Jotai/UserAtom"
 
 const { Title, Paragraph } = Typography
 
 export default function LandingPage() {
 	const { push } = useRouter();
+	const user = useAtomValue(userAtom);
 	const features = [
 		{
 			icon: <CalendarOutlined className="text-2xl text-yellow-500" />,
@@ -87,7 +90,10 @@ export default function LandingPage() {
 										size="large"
 										className="!bg-yellow-500 !border-yellow-500 hover:!bg-yellow-600 !text-black !font-semibold !h-10 sm:!h-12 !px-6 sm:!px-8 "
 										icon={<PlayCircleOutlined />}
-										onClick={() => push("/signin")}
+										onClick={() => {
+											const route = user?.data ? "/dashboard" : "/signin"
+											return push(route);
+										}}
 									>
 										Start Tracking
 									</Button>
@@ -248,7 +254,10 @@ export default function LandingPage() {
 							type="primary"
 							size="large"
 							className="!bg-yellow-500 !border-yellow-500 hover:!bg-yellow-600 !text-black !font-semibold !h-10 sm:!h-12 !px-6 sm:!px-8"
-							onClick={() => push("/signin")}
+							onClick={() => {
+								const route = user?.data ? "/dashboard" : "/signin"
+								return push(route);
+							}}
 						>
 							Get Started Free
 						</Button>

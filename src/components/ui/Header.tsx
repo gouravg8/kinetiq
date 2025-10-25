@@ -8,6 +8,8 @@ import { authClient } from "@/lib/auth-client"
 // import themeAtom from "@/Jotai/themeAtom";
 import { useRouter } from "next/navigation"
 import { useIsMobile } from "@/hooks/useIsMobile"
+import { useAtom } from "jotai"
+import { userAtom } from "@/Jotai/UserAtom"
 
 type SessionType = Awaited<ReturnType<typeof authClient.getSession>>
 
@@ -26,7 +28,7 @@ const Profile = ({ items }: MenuProps) => {
 
 const Header = () => {
 	// const [timeSegment, setTimeSegment] = useAtom(timeAtom);
-	const [session, setSession] = useState({ data: null, error: null });
+	const [user, setUser] = useAtom(userAtom);
 	// const [themeVal, setThemeVal] = useAtom(themeAtom);
 	const isMobile = useIsMobile();
 
@@ -34,7 +36,7 @@ const Header = () => {
 
 	const data = async () => {
 		const d = await authClient.getSession();
-		setSession(d as SessionType);
+		setUser(d as SessionType);
 	}
 
 	useEffect(() => {
@@ -59,7 +61,7 @@ const Header = () => {
 		// 		return "dark";
 		// 	})
 		// },
-		!session?.data
+		!user?.data
 			? {
 				key: "signin",
 				label: <span className="text-amber-400 hover:text-amber-300 font-medium">Sign in</span>,
