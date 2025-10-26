@@ -45,7 +45,9 @@ const exerciseOptions = {
     "Legs": ["Squats", "Lunges", "Leg Press", "Calf Raises"],
     "Arms": ["Bicep Curls", "Tricep Dips", "Hammer Curls", "Overhead Press"],
     "Shoulders": ["Shoulder Press", "Lateral Raises", "Front Raises", "Shrugs"],
-    "Core": ["Planks", "Crunches", "Russian Twists", "Leg Raises"]
+    "Core": ["Planks", "Crunches", "Russian Twists", "Leg Raises"],
+    "Rest Day": [],
+    "Cheat Day": []
 };
 
 function WorkoutModal({ open, data, onSave, onClose }: WorkoutModalProps) {
@@ -84,6 +86,11 @@ function WorkoutModal({ open, data, onSave, onClose }: WorkoutModalProps) {
         onClose();
     };
 
+    const handleSelectChange = () => {
+        form.setFieldsValue({ completed: false });
+    };
+
+
     return (
         <Modal
             title="Edit Workout"
@@ -109,7 +116,7 @@ function WorkoutModal({ open, data, onSave, onClose }: WorkoutModalProps) {
                     name="bodyPart"
                     rules={[{ required: true, message: 'Please select a body part!' }]}
                 >
-                    <Select placeholder="Select body part" size="large">
+                    <Select onChange={handleSelectChange} placeholder="Select body part" size="large">
                         {Object.keys(exerciseOptions).map(part => (
                             <Option key={part} value={part}>{part}</Option>
                         ))}
