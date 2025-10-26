@@ -1,17 +1,17 @@
 "use client"
-import { Dumbbell, User } from "lucide-react"
-import { useEffect, useState } from "react"
 import { Avatar, Dropdown, type MenuProps } from "antd"
+import { Dumbbell, User } from "lucide-react"
+import { useEffect } from "react"
 // import { timeAtom, timeType } from "@/Jotai/timeAtom";
 // import { useAtom } from "jotai";
 import { authClient } from "@/lib/auth-client"
 // import themeAtom from "@/Jotai/themeAtom";
-import { useRouter } from "next/navigation"
 import { useIsMobile } from "@/hooks/useIsMobile"
-import { useAtom } from "jotai"
 import { userAtom } from "@/Jotai/UserAtom"
+import { useAtom } from "jotai"
+import { useRouter } from "next/navigation"
 
-type SessionType = Awaited<ReturnType<typeof authClient.getSession>>
+export type SessionType = Awaited<ReturnType<typeof authClient.getSession>>
 
 const Profile = ({ items }: MenuProps) => {
 	return (

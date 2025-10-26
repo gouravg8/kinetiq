@@ -91,7 +91,7 @@ export default function LandingPage() {
 										className="!bg-yellow-500 !border-yellow-500 hover:!bg-yellow-600 !text-black !font-semibold !h-10 sm:!h-12 !px-6 sm:!px-8 "
 										icon={<PlayCircleOutlined />}
 										onClick={() => {
-											const route = user?.data ? "/dashboard" : "/signin"
+											const route = user?.data?.user?.email ? "/dashboard" : "/signin"
 											return push(route);
 										}}
 									>
@@ -255,7 +255,7 @@ export default function LandingPage() {
 							size="large"
 							className="!bg-yellow-500 !border-yellow-500 hover:!bg-yellow-600 !text-black !font-semibold !h-10 sm:!h-12 !px-6 sm:!px-8"
 							onClick={() => {
-								const route = user?.data ? "/dashboard" : "/signin"
+								const route = user?.data?.user?.email ? "/dashboard" : "/signin"
 								return push(route);
 							}}
 						>
