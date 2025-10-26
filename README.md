@@ -1,36 +1,132 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kinetiq - Fitness Tracker
+
+A modern, comprehensive workout tracking application designed for serious fitness enthusiasts. Track your workouts, monitor progress, and achieve your fitness goals with an intuitive interface and powerful analytics.
+
+## Features
+
+- **Smart Workout Planning**: Plan and organize workouts with an intuitive weekly calendar view
+- **Progress Tracking**: Monitor your fitness journey with detailed statistics and analytics
+- **Achievement System**: Stay motivated with streak tracking and achievement badges
+- **Exercise Library**: Access a comprehensive database of exercises with detailed tracking
+- **User Authentication**: Secure login system powered by Better Auth
+- **Responsive Design**: Optimized for desktop and mobile devices
+- **Dark Theme**: Modern dark UI with yellow accents
+
+## Tech Stack
+
+- **Frontend**: Next.js 15.4.2 with App Router
+- **UI Framework**: Ant Design + Tailwind CSS
+- **Icons**: Lucide React
+- **State Management**: Jotai
+- **Authentication**: Better Auth
+- **Database**: PostgreSQL with Drizzle ORM
+- **Query Management**: TanStack React Query
+- **Styling**: CSS-in-JS with custom theme variables
+- **TypeScript**: Strict mode enabled
+
+## Prerequisites
+
+- Node.js 18+
+- PostgreSQL database
+- pnpm package manager
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/gouravg8/kinetiq.git
+   cd kinetiq
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+2. **Install dependencies**
+   ```bash
+   pnpm install
+   ```
+
+3. **Environment Setup**
+   
+   Create a `.env.local` file in the root directory:
+   ```env
+   DATABASE_URL=postgresql://username:password@localhost:5432/kinetiq_db
+   NEXTAUTH_SECRET=your-secret-key
+   NEXTAUTH_URL=http://localhost:3000
+   ```
+
+4. **Database Setup**
+   
+   Run the database migrations:
+   ```bash
+   pnpm drizzle-kit push
+   ```
+
+5. **Run the development server**
+   ```bash
+   pnpm dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Scripts
+
+- `pnpm dev` - Start the development server with Turbopack
+- `pnpm build` - Build the application for production
+- `pnpm start` - Start the production server
+- `pnpm lint` - Run ESLint for code quality checks
+
+## Project Structure
+
+```
+src/
+├── app/              # Next.js App Router pages
+│   ├── api/         # API routes
+│   ├── dashboard/   # Dashboard page
+│   └── signin/      # Authentication page
+├── components/      # Reusable UI components
+├── db/              # Database schema and configurations
+├── hooks/           # Custom React hooks
+├── Jotai/           # State management atoms
+├── lib/             # Utility functions
+├── store/           # Additional state management
+├── theme/           # Ant Design theme configurations
+└── types/           # TypeScript type definitions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Database
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The application uses PostgreSQL with Drizzle ORM for type-safe database operations. The schema is defined in `src/db/schema.ts`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To generate and run migrations:
+```bash
+pnpm drizzle-kit generate
+pnpm drizzle-kit push
+```
 
-## Learn More
+## Authentication
 
-To learn more about Next.js, take a look at the following resources:
+Authentication is handled by Better Auth, providing secure user sessions and OAuth integration capabilities.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The application is optimized for deployment on Vercel, Netlify, or any platform supporting Next.js applications.
 
-## Deploy on Vercel
+1. Build the application:
+   ```bash
+   pnpm build
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Set environment variables in your deployment platform
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Deploy the `.next` build output
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+- todos
+- [ ] add option like rest day, cheat day with custom icons
+- [ ] make bottom stats card workable with backend data
+- [ ] add the platform options in db(for stats) like. mobile/web, mobile version, os version(if possible)
+
+## License
+
+This project is private and proprietary.
