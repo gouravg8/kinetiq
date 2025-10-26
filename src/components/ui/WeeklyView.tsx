@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Button } from "antd";
-import { Plus, Dumbbell } from "lucide-react";
+import { Plus, Dumbbell, Hamburger, BatteryMedium } from "lucide-react";
 import dayjs from "dayjs";
 import { useAtomValue } from "jotai";
 import { dateAtom, timeAtom } from "@/Jotai/timeAtom";
@@ -33,6 +33,17 @@ const DayCard = ({ dayData, onClick, setModal }:
 		}
 	}
 
+	const renderIcon = (bodyPart: string) => {
+		switch (bodyPart) {
+			case "Rest Day":
+				return <BatteryMedium size={20} className="text-black" />;
+			case "Cheat Day":
+				return <Hamburger size={20} className="text-black" />;
+			default:
+				return <Dumbbell size={20} className="text-black" />;
+		}
+	}
+
 	return (
 		<div
 			className={`w-11/12 md:w-60 mx-auto bg-zinc-800 rounded-md h-48 px-4 pb-8 pt-4 ${isToday ? "border-2 border-(--primary-yellow) cursor-pointer" : ""}`}
@@ -45,7 +56,7 @@ const DayCard = ({ dayData, onClick, setModal }:
 			{dayData?.bodyPart ? (
 				<div className="flex flex-col items-center justify-center h-full -mt-3" onClick={handleClick}>
 					<div className="flex items-center justify-center w-10 h-10 mb-2 rounded-md bg-(--primary-yellow)">
-						<Dumbbell size={20} className="text-black" />
+						{renderIcon(dayData.bodyPart)}
 					</div>
 					<div className="mb-1 text-sm font-semibold text-white">
 						{dayData?.bodyPart}
