@@ -1,15 +1,17 @@
 "use client"
-import { Dumbbell, User } from "lucide-react"
-import { useEffect, useState } from "react"
 import { Avatar, Dropdown, type MenuProps } from "antd"
+import { Dumbbell, User } from "lucide-react"
+import { useEffect } from "react"
 // import { timeAtom, timeType } from "@/Jotai/timeAtom";
 // import { useAtom } from "jotai";
 import { authClient } from "@/lib/auth-client"
 // import themeAtom from "@/Jotai/themeAtom";
-import { useRouter } from "next/navigation"
 import { useIsMobile } from "@/hooks/useIsMobile"
+import { userAtom } from "@/Jotai/UserAtom"
+import { useAtom } from "jotai"
+import { useRouter } from "next/navigation"
 
-type SessionType = Awaited<ReturnType<typeof authClient.getSession>>
+export type SessionType = Awaited<ReturnType<typeof authClient.getSession>>
 
 const Profile = ({ items }: MenuProps) => {
 	return (
@@ -26,7 +28,7 @@ const Profile = ({ items }: MenuProps) => {
 
 const Header = () => {
 	// const [timeSegment, setTimeSegment] = useAtom(timeAtom);
-	const [session, setSession] = useState({ data: null, error: null });
+	const [user, setUser] = useAtom(userAtom);
 	// const [themeVal, setThemeVal] = useAtom(themeAtom);
 	const isMobile = useIsMobile();
 
@@ -34,7 +36,7 @@ const Header = () => {
 
 	const data = async () => {
 		const d = await authClient.getSession();
-		setSession(d as SessionType);
+		setUser(d as SessionType);
 	}
 
 	useEffect(() => {
@@ -59,7 +61,7 @@ const Header = () => {
 		// 		return "dark";
 		// 	})
 		// },
-		!session?.data
+		!user?.data
 			? {
 				key: "signin",
 				label: <span className="text-amber-400 hover:text-amber-300 font-medium">Sign in</span>,
