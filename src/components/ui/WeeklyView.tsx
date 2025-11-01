@@ -128,6 +128,8 @@ const WeeklyView = () => {
 		onSuccess: () => {
 			refetch();
 			toast.success("Todays workout updated!");
+
+			refetch();
 		},
 		onError: (error) => {
 			toast.error(error?.message || "Issue while updating workout");

@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
 
 	const parseFrom = new Date(fromDate);
 	const parseTo = new Date(toDate);
-	parseTo.setHours(parseTo.getDate() + 1);
+	parseTo.setDate(parseTo.getDate() + 1);
 	parseTo.setMilliseconds(parseTo.getMilliseconds() - 1);
 
 	const data = await drizzleClient
