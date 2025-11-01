@@ -50,6 +50,13 @@
       "when": 1755450037792,
       "tag": "0006_mature_pretty_boy",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1762017227169,
+      "tag": "0007_dusty_goliath",
+      "breakpoints": true
     }
   ]
 }

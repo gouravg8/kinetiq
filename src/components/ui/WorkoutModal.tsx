@@ -116,7 +116,7 @@ function WorkoutModal({ open, data, onSave, onClose }: WorkoutModalProps) {
                     name="bodyPart"
                     rules={[{ required: true, message: 'Please select a body part!' }]}
                 >
-                    <Select onChange={handleSelectChange} placeholder="Select body part" size="large">
+                    <Select onChange={handleSelectChange} mode="multiple" placeholder="Select body part" size="large" allowClear>
                         {Object.keys(exerciseOptions).map(part => (
                             <Option key={part} value={part}>{part}</Option>
                         ))}

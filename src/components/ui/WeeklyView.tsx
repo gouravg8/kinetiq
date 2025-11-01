@@ -16,7 +16,7 @@ export interface LogsDataType {
 	dateOnly?: string; // Format: YYYY-MM-DD
 	date: string; // ISO timestamp
 	updatedOn?: string; // ISO timestamp
-	bodyPart: string;
+	bodyPart: string[];
 	isCompleted: boolean;
 }
 
@@ -33,8 +33,8 @@ const DayCard = ({ dayData, onClick, setModal }:
 		}
 	}
 
-	const renderIcon = (bodyPart: string) => {
-		switch (bodyPart) {
+	const renderIcon = (bodyPart: string[]) => {
+		switch (bodyPart[0]) {
 			case "Rest Day":
 				return <BatteryMedium size={20} className="text-black" />;
 			case "Cheat Day":
@@ -53,13 +53,13 @@ const DayCard = ({ dayData, onClick, setModal }:
 				<div className="text-lg font-bold text-zinc-500">{dayNumber}</div>
 			</div>
 
-			{dayData?.bodyPart ? (
+			{dayData?.bodyPart?.length ? (
 				<div className="flex flex-col items-center justify-center h-full -mt-3" onClick={handleClick}>
 					<div className="flex items-center justify-center w-10 h-10 mb-2 rounded-md bg-(--primary-yellow)">
 						{renderIcon(dayData.bodyPart)}
 					</div>
 					<div className="mb-1 text-sm font-semibold text-white">
-						{dayData?.bodyPart}
+						{dayData?.bodyPart[0]} {dayData?.bodyPart?.length > 1 && ("+" + (dayData?.bodyPart?.length - 1))}
 					</div>
 					{/* <div className="text-xs text-gray-400">
 						{workout.exerciseCount} exercises
@@ -86,7 +86,7 @@ const DayCard = ({ dayData, onClick, setModal }:
 const WeeklyView = () => {
 	const timeSegment = useAtomValue(timeAtom);
 	const currentDate = useAtomValue(dateAtom);
-	const [modal, setModal] = useState<{ open: boolean, data: LogsDataType }>({ open: false, data: { id: "", date: ",", bodyPart: "", isCompleted: false } });
+	const [modal, setModal] = useState<{ open: boolean, data: LogsDataType }>({ open: false, data: { id: "", date: ",", bodyPart: [], isCompleted: false } });
 
 	const onClick = () => {
 		setModal(prev => ({ ...prev, open: true }))
