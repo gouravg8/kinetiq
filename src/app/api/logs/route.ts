@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
-import workoutModal from "@/types/workoutModalType";
 import { drizzleClient } from "@/db";
 import { dailyLogs } from "@/db/schema";
 import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import workoutModal from "@/types/workoutModalType";
 import { and, asc, eq, gte, lte } from "drizzle-orm";
+import { headers } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
 	const session = await auth.api.getSession({
@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
 
 	const parseFrom = new Date(fromDate);
 	const parseTo = new Date(toDate);
-	parseTo.setHours(parseTo.getDate() + 1);
+	parseTo.setDate(parseTo.getDate() + 1);
 	parseTo.setMilliseconds(parseTo.getMilliseconds() - 1);
 
 	const data = await drizzleClient
