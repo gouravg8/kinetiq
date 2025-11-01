@@ -93,7 +93,7 @@ function WorkoutModal({ open, data, onSave, onClose }: WorkoutModalProps) {
 
     return (
         <Modal
-            title="Edit Workout"
+            title={data?.id ? "Edit Workout" : "Add Workout"}
             open={open}
             onCancel={handleCancel}
             footer={null}
