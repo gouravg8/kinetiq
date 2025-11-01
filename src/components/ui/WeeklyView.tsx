@@ -126,7 +126,6 @@ const WeeklyView = () => {
 		mutationKey: ["save-workout"],
 		mutationFn: (data: WorkoutType) => api.post("/api/logs", data),
 		onSuccess: () => {
-			refetch();
 			toast.success("Todays workout updated!");
 
 			refetch();
