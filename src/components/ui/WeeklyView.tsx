@@ -95,7 +95,7 @@ const WeeklyView = () => {
 
 	const debouncedDate = useDebounce(currentDate);
 
-	const { data: logsData, refetch, isLoading } = useQuery({
+	const { data: logsData, refetch, isLoading , isError, error} = useQuery({
 		queryKey: ["get-workout", debouncedDate],
 		queryFn: () => {
 			const startOfWeek = currentDate.startOf("week").format("YYYY-MM-DD");
@@ -145,6 +145,9 @@ const WeeklyView = () => {
 	if (timeSegment !== "week") {
 		return null; // Show monthly view component instead
 	}
+
+
+	if (isError) toast.error(error.message);
 
 	return (
 		<div className="">

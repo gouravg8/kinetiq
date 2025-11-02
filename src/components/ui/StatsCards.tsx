@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import { useAtomValue } from "jotai";
 import { Calendar, Dumbbell, Target, Zap } from "lucide-react";
 import React from "react";
+import { toast } from "sonner";
 
 interface StatCardProps {
 	icon: React.ReactNode;
@@ -53,7 +54,7 @@ const StatsCards = () => {
 
 	const debouncedDate = useDebounce(currentDate);
 
-	const { data: statsData, isLoading } = useQuery({
+	const { data: statsData, isLoading, error, isError } = useQuery({
 		queryKey: ["stats-card", debouncedDate],
 		queryFn: async () => {
 			const startOfWeek = currentDate.startOf("week").format("YYYY-MM-DD");
@@ -71,6 +72,8 @@ const StatsCards = () => {
 		{ icon: <Dumbbell size={24} />, label: "Total Workouts", value: statsData?.totalWorkouts ?? 0 },
 		{ icon: <Calendar size={24} />, label: `This Month (${currentMonth})`, value: statsData?.thisMonth ?? 0 },
 	];
+
+	if (isError) toast.error(error.message);
 
 	if (isLoading) {
 		return (
