@@ -9,6 +9,7 @@ import WorkoutModal, { WorkoutType } from "./WorkoutModal";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import api from "@/lib/axios";
 import { toast } from "sonner";
+import { useDebounce } from "@/hooks/useDebounce";
 
 export interface LogsDataType {
 	id: string;
@@ -92,8 +93,10 @@ const WeeklyView = () => {
 		setModal(prev => ({ ...prev, open: true }))
 	}
 
+	const debouncedDate = useDebounce(currentDate);
+
 	const { data: logsData, refetch } = useQuery({
-		queryKey: ["get-workout"],
+		queryKey: ["get-workout", debouncedDate],
 		queryFn: () => {
 			const startOfWeek = currentDate.startOf("week").format("YYYY-MM-DD");
 			const endOfWeek = currentDate.endOf("week").format("YYYY-MM-DD");
