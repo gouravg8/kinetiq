@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { useAtomValue } from "jotai";
 import { dateAtom, timeAtom } from "@/Jotai/timeAtom";
 import WorkoutModal, { WorkoutType } from "./WorkoutModal";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/axios";
 import { toast } from "sonner";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -88,6 +88,7 @@ const WeeklyView = () => {
 	const timeSegment = useAtomValue(timeAtom);
 	const currentDate = useAtomValue(dateAtom);
 	const [modal, setModal] = useState<{ open: boolean, data: LogsDataType }>({ open: false, data: { id: "", date: ",", bodyPart: [], isCompleted: false } });
+	const queryClient = useQueryClient();
 
 	const onClick = () => {
 		setModal(prev => ({ ...prev, open: true }))
@@ -95,7 +96,7 @@ const WeeklyView = () => {
 
 	const debouncedDate = useDebounce(currentDate);
 
-	const { data: logsData, refetch, isLoading , isError, error} = useQuery({
+	const { data: logsData, refetch, isLoading, isError, error } = useQuery({
 		queryKey: ["get-workout", debouncedDate],
 		queryFn: () => {
 			const startOfWeek = currentDate.startOf("week").format("YYYY-MM-DD");
@@ -132,6 +133,7 @@ const WeeklyView = () => {
 			toast.success("Todays workout updated!");
 
 			refetch();
+			queryClient.invalidateQueries({ queryKey: ["stats-card"] });
 		},
 		onError: (error) => {
 			toast.error(error?.message || "Issue while updating workout");
