@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Button } from "antd";
+import { Button, Spin } from "antd";
 import { Plus, Dumbbell, Hamburger, BatteryMedium } from "lucide-react";
 import dayjs from "dayjs";
 import { useAtomValue } from "jotai";
@@ -95,7 +95,7 @@ const WeeklyView = () => {
 
 	const debouncedDate = useDebounce(currentDate);
 
-	const { data: logsData, refetch } = useQuery({
+	const { data: logsData, refetch, isLoading } = useQuery({
 		queryKey: ["get-workout", debouncedDate],
 		queryFn: () => {
 			const startOfWeek = currentDate.startOf("week").format("YYYY-MM-DD");
@@ -148,7 +148,12 @@ const WeeklyView = () => {
 
 	return (
 		<div className="">
-			<div className="flex flex-col md:flex-row gap-4 mx-auto my-3">
+			{isLoading &&
+				<div className="absolute top-[45%] left-[48%]">
+					<Spin />
+				</div>
+			}
+			<div className="flex flex-col md:flex-row gap-4 mx-auto my-3 ">
 				{generateWeekData(logsData?.data)?.map((dayData: LogsDataType, index: number) => (
 					<DayCard key={index} dayData={dayData} onClick={onClick} setModal={setModal} />
 				))}
