@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Button } from "antd";
+import { Button, Spin } from "antd";
 import { Plus, Dumbbell, Hamburger, BatteryMedium } from "lucide-react";
 import dayjs from "dayjs";
 import { useAtomValue } from "jotai";
@@ -9,6 +9,7 @@ import WorkoutModal, { WorkoutType } from "./WorkoutModal";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import api from "@/lib/axios";
 import { toast } from "sonner";
+import { useDebounce } from "@/hooks/useDebounce";
 
 export interface LogsDataType {
 	id: string;
@@ -92,8 +93,10 @@ const WeeklyView = () => {
 		setModal(prev => ({ ...prev, open: true }))
 	}
 
-	const { data: logsData, refetch } = useQuery({
-		queryKey: ["get-workout"],
+	const debouncedDate = useDebounce(currentDate);
+
+	const { data: logsData, refetch, isLoading , isError, error} = useQuery({
+		queryKey: ["get-workout", debouncedDate],
 		queryFn: () => {
 			const startOfWeek = currentDate.startOf("week").format("YYYY-MM-DD");
 			const endOfWeek = currentDate.endOf("week").format("YYYY-MM-DD");
@@ -143,9 +146,17 @@ const WeeklyView = () => {
 		return null; // Show monthly view component instead
 	}
 
+
+	if (isError) toast.error(error.message);
+
 	return (
 		<div className="">
-			<div className="flex flex-col md:flex-row gap-4 mx-auto my-3">
+			{isLoading &&
+				<div className="absolute top-[45%] left-[48%]">
+					<Spin />
+				</div>
+			}
+			<div className="flex flex-col md:flex-row gap-4 mx-auto my-3 ">
 				{generateWeekData(logsData?.data)?.map((dayData: LogsDataType, index: number) => (
 					<DayCard key={index} dayData={dayData} onClick={onClick} setModal={setModal} />
 				))}
