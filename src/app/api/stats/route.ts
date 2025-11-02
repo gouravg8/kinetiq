@@ -2,11 +2,11 @@ import { drizzleClient } from "@/db";
 import { dailyLogs } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import dayjs from "dayjs";
-import { and, asc, eq, gte, lte, sql, sum } from "drizzle-orm";
+import { and, eq, gte, lte, sql } from "drizzle-orm";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
 	const session = await auth.api.getSession({
 		headers: await headers(),
 	});
@@ -42,12 +42,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
 		lte(dailyLogs.date, parseTo),
 	);
 
-	const data = await drizzleClient
-		.select()
-		.from(dailyLogs)
-		.where(dateFilter)
-		.orderBy(asc(dailyLogs.date));
-
 	const thisWeekResult = await drizzleClient
 		.select({
 			total: sql<number>`SUM(CASE WHEN ${dailyLogs.isCompleted} THEN 1 ELSE 0 END)`,
@@ -57,12 +51,12 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
 	const thisWeek = thisWeekResult[0].total || 0;
 
-	const streak = await drizzleClient
-		.select()
-		.from(dailyLogs)
-		// in this date range
-		.where(dateFilter)
-		.orderBy(asc(dailyLogs.date));
+	// const streak = await drizzleClient
+	// 	.select()
+	// 	.from(dailyLogs)
+	// 	// in this date range
+	// 	.where(dateFilter)
+	// 	.orderBy(asc(dailyLogs.date));
 
 	const totalWorkoutsResult = await drizzleClient
 		.select({
