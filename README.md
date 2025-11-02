@@ -123,9 +123,19 @@ The application is optimized for deployment on Vercel, Netlify, or any platform 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 - todos
-- [ ] add option like rest day, cheat day with custom icons
-- [ ] make bottom stats card workable with backend data
+- [x] add option like rest day, cheat day with custom icons
+- [x] make bottom stats card workable with backend data(wip for streak)
 - [ ] add the platform options in db(for stats) like. mobile/web, mobile version, os version(if possible)
+- [ ]  skeleton while loading data
+- [ ] add biceps, triceps(instead of arms) in edit/add workout
+- [ ] user can customize how much exercises they do on week
+- [ ] starts cards
+  - steak  
+    - how to calculate; should i count rest and cheat days
+    - what about the user with 3 days per week goal
+    - what if user want to change the goal after a time
+- [ ] reset session every 2 days
+- [ ] add favicon
 
 ## License
 
