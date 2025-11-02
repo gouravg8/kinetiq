@@ -31,6 +31,22 @@ const StatCard = ({ icon, label, value, className = "" }: StatCardProps) => {
 	);
 };
 
+const StatCardSkeleton = () => {
+	return (
+		<div
+			className="w-11/12 bg-zinc-800 mx-auto rounded-md flex items-center py-3 px-4 gap-4"
+		>
+			<div className="p-2 rounded bg-zinc-700">
+				<div className="w-6 h-6 bg-zinc-600 rounded animate-pulse"></div>
+			</div>
+			<div className="flex-1 space-y-2">
+				<div className="h-3 bg-zinc-700 rounded w-3/4 animate-pulse"></div>
+				<div className="h-4 bg-zinc-600 rounded w-1/2 animate-pulse"></div>
+			</div>
+		</div>
+	);
+}
+
 const StatsCards = () => {
 	const currentDate = useAtomValue(dateAtom);
 	const currentMonth = dayjs(currentDate).format("MMM");
@@ -55,6 +71,17 @@ const StatsCards = () => {
 		{ icon: <Dumbbell size={24} />, label: "Total Workouts", value: statsData?.totalWorkouts ?? 0 },
 		{ icon: <Calendar size={24} />, label: `This Month (${currentMonth})`, value: statsData?.thisMonth ?? 0 },
 	];
+
+	if (isLoading) {
+		return (
+			<div className="flex flex-col md:flex-row gap-3 mb-4">
+				<StatCardSkeleton />
+				<StatCardSkeleton />
+				<StatCardSkeleton />
+				<StatCardSkeleton />
+			</div>
+		);
+	}
 
 	return (
 		<div className="flex flex-col md:flex-row gap-3 mb-4">
