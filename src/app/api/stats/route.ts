@@ -62,7 +62,8 @@ export async function GET(req: NextRequest) {
 		.select({
 			total: sql<number>`SUM(CASE WHEN ${dailyLogs.isCompleted} THEN 1 ELSE 0 END)`,
 		})
-		.from(dailyLogs);
+		.from(dailyLogs)
+		.where(eq(dailyLogs.userId, session.user.id));
 
 	const totalWorkouts = totalWorkoutsResult[0].total || 0;
 

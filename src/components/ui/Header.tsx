@@ -9,7 +9,7 @@ import { authClient } from "@/lib/auth-client"
 import { useIsMobile } from "@/hooks/useIsMobile"
 import { userAtom } from "@/Jotai/UserAtom"
 import { useAtom } from "jotai"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 
 export type SessionType = Awaited<ReturnType<typeof authClient.getSession>>
 
@@ -71,7 +71,10 @@ const Header = () => {
 				key: "3",
 				label: <span className="text-red-400 hover:text-red-300 font-medium">Logout</span>,
 				danger: true,
-				onClick: () => authClient.signOut(),
+				onClick: () => {
+					authClient.signOut()
+					redirect("/signin")
+				},
 			},
 	]
 
