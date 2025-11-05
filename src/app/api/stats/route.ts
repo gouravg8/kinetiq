@@ -31,10 +31,12 @@ export async function GET(req: NextRequest) {
 	parseTo.setDate(parseTo.getDate() + 1);
 	parseTo.setMilliseconds(parseTo.getMilliseconds() - 1);
 
-	const parsedMonth = new Date(
+	const parsedMonthFrom = new Date(
 		dayjs(fromDate).startOf("month").format("YYYY-MM-DD"),
 	);
-	console.log({ parsedMonth });
+	const parsedMonthTo = new Date(
+		dayjs(fromDate).endOf("month").format("YYYY-MM-DD"),
+	);
 
 	const dateFilter = and(
 		eq(dailyLogs.userId, session.user.id),
@@ -75,7 +77,8 @@ export async function GET(req: NextRequest) {
 		.where(
 			and(
 				eq(dailyLogs.userId, session.user.id),
-				gte(dailyLogs.date, parsedMonth),
+				gte(dailyLogs.date, parsedMonthFrom),
+				lte(dailyLogs.date, parsedMonthTo),
 			),
 		);
 
