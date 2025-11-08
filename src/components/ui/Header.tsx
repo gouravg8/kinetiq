@@ -9,7 +9,7 @@ import { authClient } from "@/lib/auth-client"
 import { useIsMobile } from "@/hooks/useIsMobile"
 import { userAtom } from "@/Jotai/UserAtom"
 import { useAtom } from "jotai"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 
 export type SessionType = Awaited<ReturnType<typeof authClient.getSession>>
 
@@ -21,7 +21,7 @@ const Profile = ({ items }: MenuProps) => {
 			placement="topRight"
 			popupRender={(menu) => <div className="bg-zinc-900 border border-zinc-800 rounded-lg shadow-xl">{menu}</div>}
 		>
-			<Avatar icon={<User />} className="bg-amber-500 hover:bg-amber-400 transition-colors border-2 border-amber-400" />
+			<Avatar icon={<User />} />
 		</Dropdown>
 	)
 }
@@ -71,7 +71,10 @@ const Header = () => {
 				key: "3",
 				label: <span className="text-red-400 hover:text-red-300 font-medium">Logout</span>,
 				danger: true,
-				onClick: () => authClient.signOut(),
+				onClick: () => {
+					authClient.signOut()
+					redirect("/signin")
+				},
 			},
 	]
 
