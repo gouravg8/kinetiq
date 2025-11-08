@@ -21,7 +21,7 @@ const Profile = ({ items }: MenuProps) => {
 			placement="topRight"
 			popupRender={(menu) => <div className="bg-zinc-900 border border-zinc-800 rounded-lg shadow-xl">{menu}</div>}
 		>
-			<Avatar icon={<User />} className="bg-amber-500 hover:bg-amber-400 transition-colors border-2 border-amber-400" />
+			<Avatar icon={<User />} />
 		</Dropdown>
 	)
 }
